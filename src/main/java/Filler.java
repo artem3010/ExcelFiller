@@ -15,7 +15,7 @@ public class Filler {
         }
     }
 
-    public void fill() {
+    public void fill() throws IOException {
         Sheet sheet = workbook.createSheet("Sheet1");
         File[] files = getResourceFiles();
         for (int i = 0; i < files.length; i++) {
@@ -28,12 +28,11 @@ public class Filler {
             sheet.createRow(i).createCell(2,CellType.STRING) // Column for name
                     .setCellValue(PDFScanner.scan(files[i].getAbsolutePath()));
 
-            try {
                 addLink(sheet.getRow(i).getCell(2), files[i].getCanonicalPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         }
+
+        ExcelWriter.write(workbook);
 
 
     }
