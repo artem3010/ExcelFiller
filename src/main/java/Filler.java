@@ -1,7 +1,5 @@
 import org.apache.poi.common.usermodel.HyperlinkType;
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +23,7 @@ public class Filler {
                     .setCellValue(i++);
 
             sheet.createRow(i).createCell(1,CellType.STRING) // Column for number
-                    .setCellValue(StringTrnsformator.transform(files[i].getName()));
+                    .setCellValue(StringTransformation.transform(files[i].getName()));
 
             sheet.createRow(i).createCell(2,CellType.STRING) // Column for name
                     .setCellValue(PDFScanner.scan(files[i].getAbsolutePath()));
