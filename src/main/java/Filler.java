@@ -3,6 +3,7 @@ import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 public class Filler {
     private Workbook workbook;
@@ -15,9 +16,9 @@ public class Filler {
         }
     }
 
-    public void fill() throws IOException {
+    public void fill(String path) throws IOException {
         Sheet sheet = workbook.createSheet("Sheet1");
-        File[] files = getResourceFiles();
+        File[] files = getResourceFiles(path);
         for (int i = 0; i < files.length; i++) {
             sheet.createRow(i).createCell(0, CellType.NUMERIC)//Column for counter
                     .setCellValue(i++);
@@ -25,10 +26,10 @@ public class Filler {
             sheet.createRow(i).createCell(1,CellType.STRING) // Column for number
                     .setCellValue(StringTransformation.transform(files[i].getName()));
 
-            sheet.createRow(i).createCell(2,CellType.STRING) // Column for name
-                    .setCellValue(PDFScanner.scan(files[i].getAbsolutePath()));
+//            sheet.createRow(i).createCell(2,CellType.STRING) // Column for name
+//                    .setCellValue(PDFScanner.scan(files[i].getAbsolutePath()));
 
-                addLink(sheet.getRow(i).getCell(2), files[i].getCanonicalPath());
+                addLink(sheet.getRow(i).getCell(2), "input.xls");
 
         }
 
@@ -38,8 +39,7 @@ public class Filler {
     }
 
     private void addLink(Cell cell, String address) throws IOException {
-        CreationHelper createHelper = workbook.getCreationHelper();
-        Hyperlink link = createHelper.createHyperlink(HyperlinkType.FILE);
+        Hyperlink link = workbook.getCreationHelper().createHyperlink(HyperlinkType.FILE);
         link.setAddress(address);
         cell.setHyperlink(link);
         cell.setCellStyle(getStyle());
@@ -54,12 +54,9 @@ public class Filler {
         return style;
     }
 
-    private static File[] getResourceFiles() {
-        System.out.print("Input pdf files directory:");
-        String path = PathScanner.scan();
+    private static File[] getResourceFiles(String path) {
         File dir = new File(path);
         File[] arrFiles = dir.listFiles();
-
         return arrFiles;
     }
 }

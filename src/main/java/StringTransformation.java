@@ -25,13 +25,10 @@ public class StringTransformation {
 
     private static String replacerEngToRu(String string) {
 
-
         for (String key : mapEngRuLiterals.keySet()
         ) {
             string.replace(key, mapEngRuLiterals.get(key));
         }
-
-
         return string;
     }
 }
