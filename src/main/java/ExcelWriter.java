@@ -5,8 +5,7 @@ import java.io.IOException;
 
 public class ExcelWriter {
 
-    public static void write(Workbook workbook) throws IOException {
-        String dest = PathScanner.scan();
+    public static void write(Workbook workbook, String dest) throws IOException {
         workbook.write(new FileOutputStream(dest));
     }
 }

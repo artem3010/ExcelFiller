@@ -12,12 +12,12 @@ public class StringTransformation {
     }
 
     public static String transform(String fileName) {
-        fileName.toUpperCase(Locale.ROOT);
+       fileName = fileName.toUpperCase(Locale.ROOT);
         if (fileName.contains("-")) {
             //TODO: method for determine whether you need to replace '-' with ':'
         }
-        fileName.replaceAll("_.*[^.pdf]", "");
-        fileName.replace("=", ":");
+        fileName = fileName.replaceAll("_.*[^.pdf]", "");
+        fileName = fileName.replace("=", ":");
         replacerEngToRu(fileName);
 
         return fileName;
@@ -27,7 +27,7 @@ public class StringTransformation {
 
         for (String key : mapEngRuLiterals.keySet()
         ) {
-            string.replace(key, mapEngRuLiterals.get(key));
+            string = string.replace(key, mapEngRuLiterals.get(key));
         }
         return string;
     }
