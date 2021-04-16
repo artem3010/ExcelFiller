@@ -1,13 +1,18 @@
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-public class Controller{
+public class Controller {
 
     @FXML
     private ResourceBundle resources;
@@ -19,34 +24,45 @@ public class Controller{
     private TextArea text_area_dest;
 
     @FXML
-    private TextArea text_area_folder;
-
-    @FXML
     private Button start_btn;
 
     @FXML
-    private ImageView image_view_pdfToImg;
+    private Button next_btn;
+
+
+
 
     @FXML
     void initialize() {
         assert text_area_dest != null : "fx:id=\"text_area_dest\" was not injected: check your FXML file 'RootLayout.fxml'.";
-        assert text_area_folder != null : "fx:id=\"text_area_folder\" was not injected: check your FXML file 'RootLayout.fxml'.";
-        assert image_view_pdfToImg != null : "fx:id=\"image_view_pdfToImg\" was not injected: check your FXML file 'RootLayout.fxml'.";
         assert start_btn != null : "fx:id=\"start_btn\" was not injected: check your FXML file 'RootLayout.fxml'.";
 
         start_btn.setOnAction(event -> {
-            System.out.println("Test");
-            Filler filler = new Filler(text_area_dest.getText());
             try {
-                filler.fill(text_area_folder.getText(), text_area_dest.getText());
+                Filler filler = new Filler(text_area_dest.getText());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.exit(0);
+            System.out.println("End");
         });
     }
 
-    public void setImage(Image image){
-        image_view_pdfToImg.setImage(image);
+    public void openNewStage(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(Filler.class.getResource("ImgWork.fxml"));
+        AnchorPane page = null;
+        Stage img_stage = new Stage();
+        try {
+            page = (AnchorPane) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = (Stage) start_btn.getScene().getWindow();
+        stage.close();
+        img_stage.setTitle("Img");
+        Scene scene = new Scene(page);
+        img_stage.setScene(scene);
+        img_stage.show();
     }
+
+
 }

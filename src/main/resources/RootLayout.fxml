@@ -2,19 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="923.0" prefWidth="1184.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <TextArea fx:id="text_area_dest" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="403.0" promptText="Dest" />
-      <TextArea fx:id="text_area_folder" layoutX="14.0" layoutY="66.0" prefHeight="12.0" prefWidth="403.0" promptText="Path Folder" />
-      <AnchorPane layoutX="426.0" layoutY="14.0" prefHeight="771.0" prefWidth="744.0" style="-fx-border-color: silver;">
-         <children>
-            <ImageView fx:id="image_view_pdfToImg" fitHeight="898.0" fitWidth="750.0" layoutX="-2.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
-         </children></AnchorPane>
-      <Button fx:id="start_btn" layoutX="216.0" layoutY="127.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" text="Start" AnchorPane.topAnchor="127.0" />
-      <Button fx:id="button_next" layoutX="319.0" layoutY="857.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="97.0" text="Следующее" />
-      <Button fx:id="button_select" layoutX="216.0" layoutY="857.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="97.0" text="Выделить" />
+      <TextArea fx:id="text_area_dest" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="403.0" promptText="Dest" text="F:\Task\2\test" />
+      <Button fx:id="start_btn" layoutX="11.0" layoutY="53.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="200.0" text="Start" AnchorPane.topAnchor="53.0" />
+      <Button fx:id="next_btn" layoutX="216.0" layoutY="52.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="200.0" text="Далее" onAction="#openNewStage"/>
    </children>
 </AnchorPane>
