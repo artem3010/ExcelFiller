@@ -1,23 +1,32 @@
+package Model;
+
 import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class Filler {
+    public static String path;
     private Workbook workbook;
 
     public Filler(String path) {
         try {
-            workbook = WorkbookFactory.create(new File(path + "\\intput.xlsx"));
-        } catch (IOException e) {
+            this.path = path;
+            workbook = new XSSFWorkbook();
+            fill();
+            workbook.close();
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
     }
 
-    public void fill(String path, String dest) throws IOException {
+    public void fill() throws IOException, URISyntaxException {
         Sheet sheet = workbook.createSheet("Sheet1");
-        File[] files = getResourceFiles(path);
+        File[] files = getResourceFiles();
+        File folder = new File(path + "\\..");//for relative link
         int count = 0;
         for (int i = 0; i < files.length; i++) {
 
@@ -29,18 +38,15 @@ public class Filler {
                     .setCellValue(StringTransformation.transform(files[i].getName()));
 
             tempRow.createCell(2, CellType.STRING) // Column for name
-                    .setCellValue(PDFScanner.scan(path));
+                    .setCellValue("Temp");
 
-
-            addLink(sheet.getRow(i).getCell(2), files[i].getCanonicalPath());
+            addLink(sheet.getRow(i).getCell(2), folder.toURI().relativize(files[i].toURI()).toString());
         }
-        System.out.println(dest);
-        ExcelWriter.write(workbook, dest + "\\output.xlsx");
-
-
+        System.out.println(path);
+        ExcelWriter.write(workbook, path + "\\..\\output.xlsx");
     }
 
-    private void addLink(Cell cell, String address) throws IOException {
+    private void addLink(Cell cell, String address) {
         Hyperlink link = workbook.getCreationHelper().createHyperlink(HyperlinkType.FILE);
         link.setAddress(address);
         cell.setHyperlink(link);
@@ -56,7 +62,7 @@ public class Filler {
         return style;
     }
 
-    public static File[] getResourceFiles(String path) {
+    public static File[] getResourceFiles() {
         File dir = new File(path);
         File[] arrFiles = dir.listFiles();
         return arrFiles;

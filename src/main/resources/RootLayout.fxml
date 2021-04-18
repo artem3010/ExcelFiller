@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <TextArea fx:id="text_area_dest" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="403.0" promptText="Dest" text="F:\Task\2\test" />
+      <TextArea fx:id="text_area_dest" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="403.0" promptText="Dest" text="C:\Users\artem\IdeaProjects\ExcelFiller\testing\tempFiles" />
       <Button fx:id="start_btn" layoutX="11.0" layoutY="53.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="200.0" text="Start" AnchorPane.topAnchor="53.0" />
       <Button fx:id="next_btn" layoutX="216.0" layoutY="52.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="200.0" text="Далее" onAction="#openNewStage"/>
    </children>
