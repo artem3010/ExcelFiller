@@ -44,7 +44,7 @@ public class Controller {
     }
 
     public void openNewStage(ActionEvent actionEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ImgWork.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ImageViewerLayout.fxml"));
         AnchorPane page = null;
         try {
             page = (AnchorPane) loader.load();

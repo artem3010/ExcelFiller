@@ -15,28 +15,17 @@ import org.apache.pdfbox.rendering.ImageType;
 import org.apache.pdfbox.rendering.PDFRenderer;
 
 public class PDFScanner {
-    public static String scan(String path) {
-        //TODO: method for open PDF and define text in it
-        List<File> file = Arrays.asList(Filler.getResourceFiles());
-        file.forEach(x -> {
-            openAreaSelector(x);
-        });
-        return null;
-    }
 
-    public static BufferedImage openAreaSelector(File file) {
+    public static BufferedImage scan(File file) {
         BufferedImage bimg = null;
         try (PDDocument pdfDocument = Loader.loadPDF(file)
         ) {
             PDFRenderer pdfRenderer = new PDFRenderer(pdfDocument);
-            bimg = pdfRenderer.renderImageWithDPI(0, 300, ImageType.RGB);
+            bimg = pdfRenderer.renderImage(0, 1,ImageType.RGB);// renderImageWithDPI(0, 100, ImageType.RGB);
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        System.exit(0);
 
         return bimg;
     }

@@ -53,6 +53,22 @@
             <artifactId>pdfbox</artifactId>
             <version>3.0.0-RC1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+        <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>4.5.4</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>17-ea+7</version>
+        </dependency>
+
     </dependencies>
 
 </project>

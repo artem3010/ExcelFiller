@@ -1,25 +1,25 @@
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import Model.ConverterBufferedImageToWritableImage;
+import Model.Filler;
 import Model.PDFScanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import net.sourceforge.tess4j.TesseractException;
 
 public class ImgViewController {
-
-    Canvas canvas = new Canvas();
-    double x1, y1;
-    double x2, y2;
+    private double x1, y1, x2, y2;
+    private int i = 1;
     BufferedImage bufferedImage;
 
     @FXML
@@ -29,57 +29,75 @@ public class ImgViewController {
     private URL location;
 
     @FXML
-    private ImageView img_view_pdf;
+    private ImageView imgViewPdf;
 
     @FXML
-    private ImageView img_view_area;
+    private TextField textFieldForOCR;
+
 
     @FXML
-    private Button btn_select_area;
+    private Button btnNext;
+
 
     @FXML
-    private Button btn_next_img;
+    private ImageView imageViewArea;
 
+    @FXML
+    void getFirstCoordinates(MouseEvent event) {
+        x1 = event.getX();
+        y1 = event.getY();
+    }
+
+    @FXML
+    void getSecondCoordinates(MouseEvent event) {
+        x2 = event.getX();
+        y2 = event.getY();
+        System.out.println(x1 + " " + y1 + "\n"
+                + x2 + " " + y2);
+        System.out.println((int) (x2 - x1) + " " + (int) (y2 - y1));
+
+        BufferedImage tempImage = bufferedImage.getSubimage((int) x1, (int) y1, (int) (x2-x1), (int) (y2-y1));
+
+        WritableImage image = ConverterBufferedImageToWritableImage.convert(tempImage);
+        try {
+            System.out.println(TextObserver.recognize(tempImage));
+            textFieldForOCR.setText(TextObserver.recognize(tempImage));
+        } catch (TesseractException e) {
+            System.out.println(e.getMessage());
+        }
+
+        imageViewArea.setFitHeight(image.getHeight());
+        imageViewArea.setFitWidth(image.getWidth());
+        imageViewArea.setImage(image);
+
+
+    }
+
+    @FXML
+    void nextPdf(ActionEvent event) {
+        File[] files = Filler.getResourceFiles();
+        if(i<files.length) {
+            bufferedImage = PDFScanner.scan(files[i]);
+            WritableImage image = ConverterBufferedImageToWritableImage.convert(bufferedImage);
+            imgViewPdf.setFitHeight(image.getHeight());
+            imgViewPdf.setFitWidth(image.getWidth());
+            imgViewPdf.setImage(image);
+            i++;
+        }else{
+
+        }
+    }
 
     @FXML
     void initialize() {
-        assert img_view_pdf != null : "fx:id=\"img_view_pdf\" was not injected: check your FXML file 'ImgWork.fxml'.";
-        assert btn_select_area != null : "fx:id=\"btn_select_area\" was not injected: check your FXML file 'ImgWork.fxml'.";
-        assert btn_next_img != null : "fx:id=\"btn_next_img\" was not injected: check your FXML file 'ImgWork.fxml'.";
-
-        for (File f : Model.Filler.getResourceFiles()
-        ) {
-            bufferedImage = PDFScanner.openAreaSelector(f);
-        }
-
-        WritableImage  image = ConverterBufferedImageToWritableImage.convert(bufferedImage);
-        img_view_pdf.setImage(image);
+        assert imgViewPdf != null : "fx:id=\"imgViewPdf\" was not injected: check your FXML file 'ImageViewerLayout.fxml'.";
+        assert btnNext != null : "fx:id=\"btnNext\" was not injected: check your FXML file 'ImageViewerLayout.fxml'.";
+        bufferedImage = PDFScanner.scan(Filler.getResourceFiles()[0]);
+        WritableImage image = ConverterBufferedImageToWritableImage.convert(bufferedImage);
+        imgViewPdf.setFitHeight(image.getHeight());
+        imgViewPdf.setFitWidth(image.getWidth());
+        imgViewPdf.setImage(image);
 
     }
 
-    public void nextImg(ActionEvent actionEvent) {
-    }
-
-    public void setFirstPoint(MouseEvent mouseEvent) {
-        x1 = mouseEvent.getX();
-        y1 = mouseEvent.getY();
-    }
-
-
-    public void setSecondPoint(MouseEvent mouseEvent) {
-        x2 = mouseEvent.getX();
-        y2 = mouseEvent.getY();
-        canvas.setHeight(mouseEvent.getY() - canvas.getLayoutY());
-        canvas.setWidth(mouseEvent.getX() - canvas.getLayoutX());
-        System.out.println(x1);
-        System.out.println(y1);
-        System.out.println(x2);
-        System.out.println(y2);
-        bufferedImage = bufferedImage.getSubimage((int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1));
-
-        PixelReader reader = img_view_pdf.getImage().getPixelReader();
-        WritableImage newImage = new WritableImage(reader, (int) x1, (int) y1, (int) (x2 - x1), (int) (y2 - y1));
-        WritableImage wrImg = img_view_pdf.snapshot(new SnapshotParameters(), newImage);
-        img_view_area.setImage(newImage);
-    }
 }
