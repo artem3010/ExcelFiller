@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,9 +24,10 @@ import net.sourceforge.tess4j.TesseractException;
 
 public class ImgViewController {
     private double x1, y1, x2, y2;
-    private int i = 1;
+    private int i = 0;
     boolean flag;
     BufferedImage bufferedImage;
+    Filler filler = new Filler();
 
     @FXML
     private ResourceBundle resources;
@@ -74,7 +76,6 @@ public class ImgViewController {
 
         WritableImage image = ConverterBufferedImageToWritableImage.convert(tempImage);
         try {
-            System.out.println(TextObserver.recognize(tempImage));
             textFieldForOCR.setText(TextObserver.recognize(tempImage));
         } catch (TesseractException e) {
             System.out.println(e.getMessage());
@@ -83,13 +84,13 @@ public class ImgViewController {
         imageViewArea.setFitHeight(image.getHeight());
         imageViewArea.setFitWidth(image.getWidth());
         imageViewArea.setImage(image);
-        if (flag) {
+
             snapshotRectangle.relocate(x1, y1);
             snapshotRectangle.setWidth(x2 - x1);
             snapshotRectangle.setHeight(y2 - y1);
             snapshotRectangle.setVisible(true);
             flag = false;
-        }
+
 
 
     }
@@ -97,6 +98,13 @@ public class ImgViewController {
     @FXML
     void nextPdf(ActionEvent event) {
         File[] files = Filler.getResourceFiles();
+        try {
+            filler.fill(i, textFieldForOCR.getText());
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         if (i < files.length) {
             bufferedImage = PDFScanner.scan(files[i]);
             WritableImage image = ConverterBufferedImageToWritableImage.convert(bufferedImage);
@@ -105,6 +113,7 @@ public class ImgViewController {
             imgViewPdf.setImage(image);
             i++;
         }
+
     }
 
     @FXML

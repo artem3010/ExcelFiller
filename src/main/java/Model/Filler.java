@@ -4,31 +4,30 @@ import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class Filler {
-    public static String path;
+public class Filler implements Closeable {
+    private static String path;
     private Workbook workbook;
+    private Sheet sheet;
 
-    public Filler(String path) {
-        try {
-            this.path = path;
-            workbook = new XSSFWorkbook();
-            fill();
-            workbook.close();
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
+    public Filler() {
+        workbook = new XSSFWorkbook();
+        sheet = workbook.createSheet("Sheet1");
     }
 
-    public void fill() throws IOException, URISyntaxException {
-        Sheet sheet = workbook.createSheet("Sheet1");
+    public static void setPath(String path) {
+        Filler.path = path;
+    }
+
+    public void fill(int i,String name) throws IOException, URISyntaxException {
+
         File[] files = getResourceFiles();
         File folder = new File(path + "\\..");//for relative link
         int count = 0;
-        for (int i = 0; i < files.length; i++) {
 
             Row tempRow = sheet.createRow(i);
             tempRow.createCell(0, CellType.STRING)//Column for counter
@@ -38,11 +37,10 @@ public class Filler {
                     .setCellValue(StringTransformation.transform(files[i].getName()));
 
             tempRow.createCell(2, CellType.STRING) // Column for name
-                    .setCellValue("Temp");
+                    .setCellValue(name);
 
             addLink(sheet.getRow(i).getCell(2), folder.toURI().relativize(files[i].toURI()).toString());
-        }
-        System.out.println(path);
+
         ExcelWriter.write(workbook, path + "\\..\\output.xlsx");
     }
 
@@ -66,5 +64,10 @@ public class Filler {
         File dir = new File(path);
         File[] arrFiles = dir.listFiles();
         return arrFiles;
+    }
+
+    @Override
+    public void close() throws IOException {
+        workbook.close();
     }
 }

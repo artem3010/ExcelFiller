@@ -38,8 +38,7 @@ public class Controller {
         assert start_btn != null : "fx:id=\"start_btn\" was not injected: check your FXML file 'RootLayout.fxml'.";
 
         start_btn.setOnAction(event -> {
-            Filler filler = new Filler(text_area_dest.getText());
-            System.out.println("End");
+            Filler.setPath(text_area_dest.getText());
         });
     }
 
