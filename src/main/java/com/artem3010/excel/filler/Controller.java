@@ -1,8 +1,10 @@
+package com.artem3010.excel.filler;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Model.Filler;
+import com.artem3010.excel.filler.Filler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

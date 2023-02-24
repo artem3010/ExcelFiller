@@ -1,3 +1,4 @@
+package com.artem3010.excel.filler;
 
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;

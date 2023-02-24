@@ -1,4 +1,4 @@
-package Model;
+package com.artem3010.excel.filler;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

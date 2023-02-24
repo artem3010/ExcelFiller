@@ -1,4 +1,5 @@
-import java.awt.*;
+package com.artem3010.excel.filler;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -6,19 +7,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import Model.ConverterBufferedImageToWritableImage;
-import Model.Filler;
-import Model.PDFScanner;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import net.sourceforge.tess4j.TesseractException;
 

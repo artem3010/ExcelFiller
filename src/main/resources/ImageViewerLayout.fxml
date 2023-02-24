@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="947.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ImgViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="947.0" prefWidth="666.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.artem3010.excel.filler.ImgViewController">
    <children>
       <ImageView fx:id="imgViewPdf" fitHeight="835.0" fitWidth="666.0" onMousePressed="#getFirstCoordinates" onMouseReleased="#getSecondCoordinates" pickOnBounds="true" preserveRatio="true" />
       <Rectangle fx:id="snapshotRectangle" arcHeight="1.0" arcWidth="1.0" fill="#3c3c3c" height="1.0" layoutX="276.0" layoutY="442.0" onMouseDragged="#dragArea" opacity="0.1" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="1.0" x="50.0" y="50.0" />

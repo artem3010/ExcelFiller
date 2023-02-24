@@ -1,4 +1,4 @@
-package Model;
+package com.artem3010.excel.filler;
 
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
